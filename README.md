@@ -31,11 +31,11 @@ github "greycats/survata-ios-sdk" >= 1.0
 And add `import Survata` to the top of the files using Survata
 
 ### Manually
-- Drag and drop [Survata.framework](https://github.com/greycats/survata-ios-sdk/archive/sdk.zip) into yours.
+- Drag and drop [Survata.framework](https://github.com/survata/survata-ios-public-sdk/archive/sdk.zip) into yours.
 
 ## Examples
 
-Please check out [demo app](https://github.com/greycats/survata-ios-demo) for a real-life demo.
+Please check out [demo app](https://github.com/survata/survata-ios-demo-app) for a real-life demo.
 
 Here is a brief demo to bind Survey to a button:
 
