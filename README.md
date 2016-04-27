@@ -25,13 +25,11 @@ And add `import Survata` to the top of the files using Survata
 To intergrate Survata into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "greycats/survata-ios-sdk" >= 1.0
+github "survata/survata-ios-public-sdk" >= 1.0
 ```
 
 And add `import Survata` to the top of the files using Survata
 
-### Manually
-- Drag and drop [Survata.framework](https://github.com/survata/survata-ios-public-sdk/archive/sdk.zip) into yours.
 
 ## Examples
 
