@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta id="viewport" name="viewport" content="user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
+    <style>
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    #loader {
+      background-image: url('data:image/png;base64,[LOADER_BASE64]');
+      position: absolute;
+      background-size: 128px 128px;
+      background-repeat: no-repeat;
+      background-position: center center;
+      width:128px;
+      height: 128px;
+      top: 50%;
+      left: 50%;
+      margin-left: -64px;
+      margin-top: -64px;
+      animation: spin 2.5s linear infinite;
+      -webkit-animation: spin 2.5s linear infinite;
+    }
+    </style>
+    <script>
+    (function(w, d, t, v) {
+          w[v] = w[v] || {}; w[v].qr = []; w[v].qf = [];
+          var got = 0, g = function() {
+              if (got) { return; } got = 1;
+              w[v].ft = setTimeout(function() {
+                  for (var i = 0; i < w[v].qf.length ; i++) { w[v].qf[i][0].call(w[v]); }
+                  w[v].f = 1; w[v].qf = [];
+                  w[v].fail = function(fn) { fn.call(w[v]); return w[v]; };
+              }, 5000);
+              var s = d.createElement(t);
+              s.src = "https://api.survata.net/latest/js/survata.js?cb="+((new Date().getTime())/1e3).toFixed();
+              var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s, scr);
+          };
+          w[v].ready = function() { g(); w[v].qr.push(arguments); return w[v]; };
+          w[v].fail = function() { g(); w[v].qf.push(arguments); return w[v]; };
+          w[v].publisher = "[PUBLISHER_ID]";
+      }(window, document, 'script', 'Survata'));
+    </script>
+  </head>
+  <body>
+    <div id="loader"/>
+    <script>
+    Survata.ready(function() {
+      var option = [OPTION] || {};
+      option["verticalLayout"] = true;
+      option["hideFooter"] = true;
+      option["disallowClose"] = true;
+      var s = Survata.createSurveywall(option);
+      s.on("load", function(data) {
+        var loader = document.getElementById("loader");
+        loader.setAttribute("style", "display:none;");
+        webkit.messageHandlers.load.postMessage(data);
+      });
+      s.on("interviewComplete", function() {
+        webkit.messageHandlers.interviewComplete.postMessage({});
+      });
+      s.on("interviewStart", function() {
+        webkit.messageHandlers.interviewStart.postMessage({});
+      });
+      s.on("interviewSkip", function() {
+        webkit.messageHandlers.interviewSkip.postMessage({});
+      });
+      window.startInterview = s.startInterview;
+      webkit.messageHandlers.ready.postMessage({});
+    }, true);
+    Survata.fail(function() {
+      webkit.messageHandlers.onFail.postMessage();
+    });
+    </script>
+  </body>
+</html>
