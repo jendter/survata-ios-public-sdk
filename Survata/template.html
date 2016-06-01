@@ -80,6 +80,9 @@
       s.on("interviewSkip", function() {
         webkit.messageHandlers.interviewSkip.postMessage({});
       });
+      s.on("noSurveyAvailable", function() {
+        webkit.messageHandlers.noSurveyAvailable.postMessage({});
+      });
       window.startInterview = s.startInterview;
       webkit.messageHandlers.ready.postMessage({});
     }, true);
