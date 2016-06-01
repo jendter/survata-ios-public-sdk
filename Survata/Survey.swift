@@ -25,6 +25,7 @@ enum status returned in present api
 	case Skipped
 	case Canceled
 	case CreditEarned
+	case NoSurveyAvailable
 	case NetworkNotAvailable
 }
 
@@ -202,7 +203,7 @@ private func disposeMediaWindow() {
 
 @IBDesignable
 class SurveyView: UIView, WKScriptMessageHandler {
-	static let events = ["load", "interviewComplete", "interviewSkip", "interviewStart", "fail", "ready", "log"]
+	static let events = ["load", "interviewComplete", "interviewSkip", "interviewStart", "noSurveyAvailable", "fail", "ready", "log"]
 	weak var webView: WKWebView!
 	weak var survey: Survey?
 	weak var closeButton: UIControl!
@@ -356,6 +357,12 @@ class SurveyViewController: UIViewController {
 			self?.dismissViewControllerAnimated(true, completion: nil)
 			self?.onCompletion?(.Skipped)
 		}
+
+		surveyView.on("noSurveyAvailable") {[weak self] _ in
+			self?.dismissViewControllerAnimated(true, completion: nil)
+			self?.onCompletion?(.NoSurveyAvailable)
+		}
+
 		surveyView.createSurveyWall(survey)
 		timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue())
 		dispatch_resume(timer)
