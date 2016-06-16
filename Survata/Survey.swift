@@ -257,9 +257,6 @@ class SurveyView: UIView, WKScriptMessageHandler {
 		webView.scrollView.showsVerticalScrollIndicator = false
 		webView.scrollView.showsHorizontalScrollIndicator = false
 		self.webView = webView
-		on("load") {[weak bar] _ in
-			bar?.hidden = false
-		}
 	}
 
 	deinit {
@@ -340,6 +337,7 @@ class SurveyViewController: UIViewController {
 			self?.survey.print("data \(data)")
 			if let data = data as? [String: AnyObject] {
 				if data["status"] as? String == "monetizable" {
+                    surveyView.topBar?.hidden = false
 					//continue
 				} else {
 					self?.dismissViewControllerAnimated(true, completion: nil)
