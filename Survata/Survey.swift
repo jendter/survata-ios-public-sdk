@@ -228,7 +228,7 @@ class SurveyView: UIView, WKScriptMessageHandler {
 		bar.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(bar)
 		bar.fullWidth()
-		bar.fixAttribute(.Height, value: 39)
+		bar.fixAttribute(.Height, value: 64)
 		bar.toTheTop()
 		topBar = bar
 
@@ -236,10 +236,10 @@ class SurveyView: UIView, WKScriptMessageHandler {
 		closeButton.opaque = false
 		closeButton.translatesAutoresizingMaskIntoConstraints = false
 		bar.addSubview(closeButton)
-		closeButton.fixAttribute(.Width, value: 39)
-		closeButton.fixAttribute(.Height, value: 39)
+        closeButton.fixAttribute(.Width, value: 42)
+        closeButton.fixAttribute(.Height, value: 42)
 		closeButton.toTheRight()
-		closeButton.toTheTop()
+		closeButton.toTheBottom()
 		self.closeButton = closeButton
 		bar.hidden = true
 
@@ -257,9 +257,6 @@ class SurveyView: UIView, WKScriptMessageHandler {
 		webView.scrollView.showsVerticalScrollIndicator = false
 		webView.scrollView.showsHorizontalScrollIndicator = false
 		self.webView = webView
-		on("load") {[weak bar] _ in
-			bar?.hidden = false
-		}
 	}
 
 	deinit {
@@ -306,7 +303,7 @@ class SurveyViewController: UIViewController {
 	weak var surveyView: SurveyView!
 	weak var survey: Survey!
 
-	var margin: CGFloat = 5
+	var margin: CGFloat = 0
 	var onCompletion: ((SVSurveyResult) -> ())?
 
 	override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
@@ -340,6 +337,7 @@ class SurveyViewController: UIViewController {
 			self?.survey.print("data \(data)")
 			if let data = data as? [String: AnyObject] {
 				if data["status"] as? String == "monetizable" {
+                    surveyView.topBar?.hidden = false
 					//continue
 				} else {
 					self?.dismissViewControllerAnimated(true, completion: nil)
