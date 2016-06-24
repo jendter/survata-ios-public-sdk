@@ -7,27 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		271103B71D1D78EE00BCE968 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271103B61D1D78EE00BCE968 /* Networking.swift */; };
+		271103B91D1D790100BCE968 /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271103B81D1D790100BCE968 /* Survey.swift */; };
 		CF16C0231C6C25FD004D5122 /* Survata.h in Headers */ = {isa = PBXBuildFile; fileRef = CF16C0221C6C25FD004D5122 /* Survata.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CF57C63B1C7D431700DA54EB /* survata-spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = CF57C63A1C7D431700DA54EB /* survata-spinner.png */; };
-		CF8687601C6C3C550032F22B /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF86875F1C6C3C550032F22B /* Survey.swift */; };
 		CF8687621C6C42010032F22B /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = CF8687611C6C42010032F22B /* template.html */; };
 		CF955ABF1C71AA25002AEBEA /* PostalCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF955ABE1C71AA25002AEBEA /* PostalCode.swift */; };
 		CF955ADF1C71B639002AEBEA /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF955ADE1C71B639002AEBEA /* Reachability.swift */; };
 		CF9CB4451C7BF9DA003AB816 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9CB4441C7BF9DA003AB816 /* UI.swift */; };
-		CFC0DF4C1C74464300EBA471 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC0DF4B1C74464300EBA471 /* Networking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		271103B61D1D78EE00BCE968 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		271103B81D1D790100BCE968 /* Survey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Survey.swift; sourceTree = "<group>"; };
 		CF16C01F1C6C25FD004D5122 /* Survata.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Survata.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF16C0221C6C25FD004D5122 /* Survata.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Survata.h; sourceTree = "<group>"; };
 		CF16C0241C6C25FD004D5122 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF57C63A1C7D431700DA54EB /* survata-spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "survata-spinner.png"; sourceTree = "<group>"; };
-		CF86875F1C6C3C550032F22B /* Survey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Survey.swift; sourceTree = "<group>"; };
 		CF8687611C6C42010032F22B /* template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = template.html; sourceTree = "<group>"; };
 		CF955ABE1C71AA25002AEBEA /* PostalCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostalCode.swift; sourceTree = "<group>"; };
 		CF955ADE1C71B639002AEBEA /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		CF9CB4441C7BF9DA003AB816 /* UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
-		CFC0DF4B1C74464300EBA471 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		CFC0DF4D1C75690D00EBA471 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -64,9 +64,9 @@
 			children = (
 				CF57C63A1C7D431700DA54EB /* survata-spinner.png */,
 				CF16C0221C6C25FD004D5122 /* Survata.h */,
-				CF86875F1C6C3C550032F22B /* Survey.swift */,
 				CF9CB4441C7BF9DA003AB816 /* UI.swift */,
-				CFC0DF4B1C74464300EBA471 /* Networking.swift */,
+				271103B61D1D78EE00BCE968 /* Networking.swift */,
+				271103B81D1D790100BCE968 /* Survey.swift */,
 				CF955ADE1C71B639002AEBEA /* Reachability.swift */,
 				CF955ABE1C71AA25002AEBEA /* PostalCode.swift */,
 				CF8687611C6C42010032F22B /* template.html */,
@@ -158,11 +158,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF8687601C6C3C550032F22B /* Survey.swift in Sources */,
+				271103B71D1D78EE00BCE968 /* Networking.swift in Sources */,
 				CF955ABF1C71AA25002AEBEA /* PostalCode.swift in Sources */,
+				271103B91D1D790100BCE968 /* Survey.swift in Sources */,
 				CF955ADF1C71B639002AEBEA /* Reachability.swift in Sources */,
 				CF9CB4451C7BF9DA003AB816 /* UI.swift in Sources */,
-				CFC0DF4C1C74464300EBA471 /* Networking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

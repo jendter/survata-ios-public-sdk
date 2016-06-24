@@ -339,10 +339,12 @@ class SurveyViewController: UIViewController {
 				if data["status"] as? String == "monetizable" {
                     surveyView.topBar?.hidden = false
 					//continue
-				} else {
-					self?.dismissViewControllerAnimated(true, completion: nil)
-					self?.onCompletion?(.CreditEarned)
-				}
+                } else if data["status"] as? String != "interviewComplete" &&
+                          data["status"] as? String != "interviewSkip" &&
+                          data["status"] as? String != "noSurveyAvailable" {
+                    self?.dismissViewControllerAnimated(true, completion: nil)
+                    self?.onCompletion?(.CreditEarned)
+                }
 			}
 		}
 		surveyView.on("interviewComplete") {[weak self] _ in

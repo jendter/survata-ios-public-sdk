@@ -33,15 +33,25 @@ extension Survey {
 		request.setValue("application/javascript", forHTTPHeaderField: "Content-Type")
 		let session = NSURLSession.sharedSession()
 		let task = session.dataTaskWithRequest(request) { (data, _, error) in
-			if let data = data, object = try! NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
-				dispatch_async(dispatch_get_main_queue()) {
-					completion(object, nil)
-				}
-			} else {
-				dispatch_async(dispatch_get_main_queue()) {
-					completion(nil, error)
-				}
-			}
+            if let data = data {
+                do {
+                    // Success
+                    let object = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject]
+                    dispatch_async(dispatch_get_main_queue()) {
+                        completion(object, nil)
+                    }
+                } catch {
+                    // Failure (JSON parsing failed)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        completion(nil, NSError(domain:"SurvataErrorDomain", code: 2, userInfo: [NSLocalizedDescriptionKey:"Survata JSON parsing failed."]))
+                    }
+                }
+            } else {
+                // Failure (Network Error)
+                dispatch_async(dispatch_get_main_queue()) {
+                    completion(nil, error)
+                }
+            }
 		}
 		task.resume()
 	}
