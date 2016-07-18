@@ -37,12 +37,42 @@ Please check out [demo app](https://github.com/survata/survata-ios-demo-app) for
 
 Here is a brief demo to bind Survey to a button:
 
+```swift
+class ViewController: UIViewController {
+    weak var surveyButton: UIButton!
+
+    var survey: Survey!
+
+    func checkSurvey() {
+        let publisher = ....
+        let option = SurveyOption(publicher: publicher)
+        survey = Survey(option: option)
+        survey.create { availability in
+            if availability == .Available {
+                surveyButton.hidden = false
+            }
+        }
+    }
+
+    // action for surveyButton
+    func showSurvey() {
+        survey.createSurveyWall { result in
+            if result == .Completed {
+                surveyButton.hidden = true
+            }
+        }
+    }
+}
+```
+
+Here's another longer demo that goes more in-depth (I highly recommend you read both). 
+
 ### Step 1
 You can display it in your project however you like, but I chose to use a UIView, an ActivityIndicatorView, and a Button in order to trigger the creation of the survey. 
 ```swift
     @IBOutlet weak var surveyMask: GradientView!
     @IBOutlet weak var surveyIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var scoreButton: UIButton!
+    @IBOutlet weak var surveyButton: UIButton!
 ```
 ### Step 2
 Then, I used the function "createSurvey()" to create the survey. Initialize it with the property publisherId. It also checks if the survey is available. 
