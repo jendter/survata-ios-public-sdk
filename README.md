@@ -45,7 +45,7 @@ You can display it in your project however you like, but I chose to use a UIView
     @IBOutlet weak var scoreButton: UIButton!
 ```
 ### Step 2
-Then, I used the function "createSurvey()" to create the survey. Initialize it with the property publisherId. 
+Then, I used the function "createSurvey()" to create the survey. Initialize it with the property publisherId. It also checks if the survey is available. 
 
 ```swift
 func createSurvey() {
