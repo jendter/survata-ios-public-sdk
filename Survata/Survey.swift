@@ -7,6 +7,7 @@
 //
 
 import WebKit
+import AdSupport
 
 /**
 enum status returned in create api
@@ -50,11 +51,29 @@ do not modify it after sending to Survey.create
 		self.publisher = publisher
 	}
 
-	public var json: [String: AnyObject] {
+	var mobileAdId: String? {
+		if ASIdentifierManager.sharedManager().advertisingTrackingEnabled {
+			return ASIdentifierManager.sharedManager().advertisingIdentifier.UUIDString
+		}
+		return nil
+	}
+
+	func optionForSDK(zipcode: String?) -> [String: AnyObject] {
+		var option: [String: AnyObject] = [:]
+		option["mobileAdId"] = mobileAdId
+		option["publisherUuid"] = publisher
+		option["contentName"] = contentName
+		option["postalCode"] = zipcode
+		return option
+	}
+
+	func optionForJS(zipcode: String?) -> [String: AnyObject] {
 		var option: [String: AnyObject] = [:]
 		option["brand"] = brand
 		option["explainer"] = explainer
 		option["contentName"] = contentName
+		option["mobileAdId"] = mobileAdId
+		option["postalCode"] = zipcode
 		return option
 	}
 }
@@ -86,11 +105,11 @@ private func createMediaWindow() -> UIWindow! {
 private func disposeMediaWindow() {
 	UIView.animateWithDuration(0.3, animations: {
 		mediaWindow?.alpha = 0
-		}) { _ in
-			UIApplication.sharedApplication().delegate?.window??.makeKeyAndVisible()
-			mediaWindow?.hidden = true
-			mediaWindow?.rootViewController = nil
-			mediaWindow = nil
+	}) { _ in
+		UIApplication.sharedApplication().delegate?.window??.makeKeyAndVisible()
+		mediaWindow?.hidden = true
+		mediaWindow?.rootViewController = nil
+		mediaWindow = nil
 	}
 }
 
@@ -143,10 +162,7 @@ private func disposeMediaWindow() {
 	}
 
 	func _create(completion: SVSurveyAvailability -> ()) {
-		var json: [String: String] = [:]
-		json["publisherUuid"] = option.publisher
-		json["contentName"] = option.contentName
-		json["postalCode"] = zipcode
+		let json = option.optionForSDK(zipcode)
 		let next = {[weak self] (availability: SVSurveyAvailability) -> () in
 			self?.availability = availability
 			completion(availability)
@@ -236,8 +252,8 @@ class SurveyView: UIView, WKScriptMessageHandler {
 		closeButton.opaque = false
 		closeButton.translatesAutoresizingMaskIntoConstraints = false
 		bar.addSubview(closeButton)
-        closeButton.fixAttribute(.Width, value: 42)
-        closeButton.fixAttribute(.Height, value: 42)
+		closeButton.fixAttribute(.Width, value: 42)
+		closeButton.fixAttribute(.Height, value: 42)
 		closeButton.toTheRight()
 		closeButton.toTheBottom()
 		self.closeButton = closeButton
@@ -268,16 +284,15 @@ class SurveyView: UIView, WKScriptMessageHandler {
 		let bundle = NSBundle(forClass: classForCoder)
 		if let templateFile = bundle.URLForResource("template", withExtension: "html"),
 			let template = try? String(contentsOfURL: templateFile, encoding: NSUTF8StringEncoding) {
-				let loader = NSData(contentsOfURL: bundle.URLForResource("survata-spinner", withExtension: "png")!)!.base64EncodedStringWithOptions([])
-				var json = survey.option.json
-				json["postalCode"] = survey.zipcode
-				let optionString = jsonString(json)
-				let html = template
-					.stringByReplacingOccurrencesOfString("[PUBLISHER_ID]", withString: survey.option.publisher)
-					.stringByReplacingOccurrencesOfString("[OPTION]", withString: optionString)
-					.stringByReplacingOccurrencesOfString("[LOADER_BASE64]", withString: loader)
-				survey.print("loading survata option = \(optionString)...")
-				webView.loadHTMLString(html, baseURL: NSURL(string: "https://www.survata.com"))
+			let loader = NSData(contentsOfURL: bundle.URLForResource("survata-spinner", withExtension: "png")!)!.base64EncodedStringWithOptions([])
+			let json = survey.option.optionForJS(survey.zipcode)
+			let optionString = jsonString(json)
+			let html = template
+				.stringByReplacingOccurrencesOfString("[PUBLISHER_ID]", withString: survey.option.publisher)
+				.stringByReplacingOccurrencesOfString("[OPTION]", withString: optionString)
+				.stringByReplacingOccurrencesOfString("[LOADER_BASE64]", withString: loader)
+			survey.print("loading survata option = \(optionString)...")
+			webView.loadHTMLString(html, baseURL: NSURL(string: "https://www.survata.com"))
 		}
 	}
 
@@ -328,7 +343,7 @@ class SurveyViewController: UIViewController {
 		surveyView.layer.borderWidth = 1
 		self.surveyView = surveyView
 
-		surveyView.closeButton.addTarget(self, action: "close", forControlEvents: .TouchUpInside)
+		surveyView.closeButton.addTarget(self, action: #selector(close), forControlEvents: .TouchUpInside)
 		surveyView.on("ready") {[weak self] _ in
 			self?.surveyView?.startInterview()
 		}
@@ -337,7 +352,7 @@ class SurveyViewController: UIViewController {
 			self?.survey.print("data \(data)")
 			if let data = data as? [String: AnyObject] {
 				if data["status"] as? String == "monetizable" {
-                    surveyView.topBar?.hidden = false
+					surveyView.topBar?.hidden = false
 					//continue
 				} else {
 					self?.dismissViewControllerAnimated(true, completion: nil)

@@ -9,9 +9,11 @@
 import Foundation
 
 extension Survey {
-	static func post(urlString: String, json: [String: AnyObject], completion: ([String: AnyObject]?, NSError?) -> ()) {
-		guard let url = NSURL(string: urlString) else { return }
-		let request = NSMutableURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 20)
+	static func post(urlString: String, json: [String: AnyObject], completion: ([String: AnyObject]?, NSError?) -> Void) {
+		guard let url = NSURL(string: urlString) else {
+            return
+        }
+		let request = NSMutableURLRequest(URL: url, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: 20)
 		request.HTTPMethod = "POST"
 		let userAgent: String = {
 			if let info = NSBundle.mainBundle().infoDictionary {
@@ -29,11 +31,12 @@ extension Survey {
 			return "Survata/iOS"
 		}()
 		request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
-		request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(json, options: [])
+        request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(json, options: [])
 		request.setValue("application/javascript", forHTTPHeaderField: "Content-Type")
 		let session = NSURLSession.sharedSession()
 		let task = session.dataTaskWithRequest(request) { (data, _, error) in
-			if let data = data, object = try! NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
+			if let data = data,
+                object = try! NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject] {
 				dispatch_async(dispatch_get_main_queue()) {
 					completion(object, nil)
 				}
