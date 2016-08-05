@@ -193,7 +193,7 @@ After that, when the button is displayed, I defined a function called startSurve
 
 ## Submitting your App
 
-when submitting to AppStore, please select Yes to the question “Does this app use the Advertising Identifier (IDFA)?” and check “Server advertisement within the app” in the second form box.
+when submitting to AppStore, please select Yes to the question “Does this app use the Advertising Identifier (IDFA)?” and check “Serve advertisement within the app” in the second form box.
 
 ![IDFA](https://developer.apple.com/library/ios/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Art/IDFA_2x.png)
 
