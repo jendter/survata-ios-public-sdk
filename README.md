@@ -128,6 +128,7 @@ There is another class called **SurveyDebugOption** (subclass of SurveyOption) i
 ### Step 3
 
 As you can probably tell, I created a Settings.swift file to store my information. This is part of it.
+
 ```swift
 struct Settings {
 	static var publisherId: String! = "survata-test"
@@ -137,8 +138,10 @@ struct Settings {
 	static var sendZipcode: Bool = true
 }
 ```
+
 ### Step 4 
 If the survey is created successfully, I triggered the showSurveyButton() and showFull() functions to display them.
+
 ```swift
 func showFull() {
        surveyMask.hidden = true
@@ -151,6 +154,7 @@ func showSurveyButton() {
 ```
 ### Step 5 
 After that, when the button is displayed, I defined a function called startSurvey() that will display the survey once the button is tapped (createSurveyWall()). It also returns the events -- COMPLETED, CANCELED, CREDIT_EARNED, NETWORK_NOT_AVAILABLE, and NO_SURVEY_AVAILABLE (ex. people under 13, people taking multiple surveys and being capped at our frequency cap). 
+
 ```swift
  @IBAction func startSurvey(sender: UIButton) {
         if (survey != nil){
@@ -186,3 +190,12 @@ After that, when the button is displayed, I defined a function called startSurve
         }
     }
 ```
+
+## Submitting your App
+
+when submitting to AppStore, please select Yes to the question “Does this app use the Advertising Identifier (IDFA)?” and check “Server advertisement within the app” in the second form box.
+
+![IDFA](https://developer.apple.com/library/ios/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Art/IDFA_2x.png)
+
+![IDFA-Submitting](https://developer.apple.com/library/ios/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Art/11IDFA-Submitting_2x.png)
+ 
