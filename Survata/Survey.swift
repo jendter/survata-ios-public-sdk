@@ -46,6 +46,8 @@ do not modify it after sending to Survey.create
 	public var explainer: String?
 	public let publisher: String
 	public var contentName: String?
+    public var preview: String?
+    public var testing: Bool?
 
 	public init(publisher: String) {
 		self.publisher = publisher
@@ -64,6 +66,8 @@ do not modify it after sending to Survey.create
 		option["publisherUuid"] = publisher
 		option["contentName"] = contentName
 		option["postalCode"] = zipcode
+        option["preview"] = preview
+        option["testing"] = testing
 		return option
 	}
 
@@ -74,6 +78,8 @@ do not modify it after sending to Survey.create
 		option["contentName"] = contentName
 		option["mobileAdId"] = mobileAdId
 		option["postalCode"] = zipcode
+        option["preview"] = preview
+        option["testing"] = testing
 		return option
 	}
 }

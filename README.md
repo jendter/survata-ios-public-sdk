@@ -116,12 +116,12 @@ There is a property called **testing** which is a boolean that can be set to tru
     option.testing = true
 ```
 
-####2. SECOND WAY: Using a default survey with SurveyDebugOption, "preview" property & demo survey preview id 
+####2. SECOND WAY: Using a default survey with SurveyOption, "preview" property & demo survey preview id 
 
-There is another class called **SurveyDebugOption** (subclass of SurveyOption) in the SDK. It has a property called **preview** that allows you to set a default preview Id for a survey (thus, have a specific survey). We have a default short demo survey with just 3 questions at Survata that is perfect for testing that uses the preview id **5fd725139884422e9f1bb28f776c702d**. Here's some code as to show you how to integrate it: 
+There is a property called **preview** that allows you to set a default preview ID for a survey (thus, have a specific survey). We have a default short demo survey with just 3 questions at Survata that is perfect for testing that uses the preview id **5fd725139884422e9f1bb28f776c702d**. Here's some code as to show you how to integrate it: 
 
 ```swift
-    let option = SurveyDebugOption(publisher: Settings.publisherId)
+    let option = SurveyOption(publisher: Settings.publisherId)
     option.preview = "5fd725139884422e9f1bb28f776c702d"
 ```
 
@@ -158,11 +158,6 @@ After that, when the button is displayed, I defined a function called startSurve
 ```swift
  @IBAction func startSurvey(sender: UIButton) {
         if (survey != nil){
-            if(counter1 + 20 <= 100){
-                counter1 += 20
-            } else {
-                counter1 = 100
-            }
             survey.createSurveyWall { result in
                 delay(2) {
                     SVProgressHUD.dismiss()
